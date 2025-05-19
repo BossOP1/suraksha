@@ -800,7 +800,7 @@
             </a>
             
             <!-- Additional Info -->
-            <!-- <div class="mt-12 flex items-center space-x-8">
+            <div class="mt-12 flex items-center space-x-8">
                 <div class="text-center">
                     <p class="text-4xl font-bold text-yellow-400">31,000+</p>
                     <p class="text-gray-300">Organizations</p>
@@ -813,7 +813,7 @@
                     <p class="text-4xl font-bold text-yellow-400">24/7</p>
                     <p class="text-gray-300">Support</p>
                 </div>
-            </div> -->
+            </div>
         </div>
     </div>
     
@@ -1774,7 +1774,7 @@
                                   <span class="text-2xl font-bold">₹10,585.00</span>
                               </div>
                           </div>
-                          <div class="p-4">
+                          <div class="p-4 text-center">
                               <button class="bg-primary text-white py-2 px-6 rounded-full hover:bg-primary/90 transition">Buy now</button>
                           </div>
                       </div>
@@ -1793,7 +1793,7 @@
                                   <span class="text-2xl font-bold">₹9,051.00</span>
                               </div>
                           </div>
-                          <div class="p-4">
+                          <div class="p-4 text-center">
                               <button class="bg-primary text-white py-2 px-6 rounded-full hover:bg-primary/90 transition">Buy now</button>
                           </div>
                       </div>
@@ -1812,7 +1812,7 @@
                                   <span class="text-2xl font-bold">₹4,372.00</span>
                               </div>
                           </div>
-                          <div class="p-4">
+                          <div class="p-4 text-center">
                               <button class="bg-primary text-white py-2 px-6 rounded-full hover:bg-primary/90 transition">Buy now</button>
                           </div>
                       </div>
@@ -1831,7 +1831,7 @@
                                   <span class="text-2xl font-bold">₹7,199.00</span>
                               </div>
                           </div>
-                          <div class="p-4">
+                          <div class="p-4 text-center">
                               <button class="bg-primary text-white py-2 px-6 rounded-full hover:bg-primary/90 transition">Buy now</button>
                           </div>
                       </div>
@@ -1850,7 +1850,7 @@
                                   <span class="text-2xl font-bold">₹8,999.00</span>
                               </div>
                           </div>
-                          <div class="p-4">
+                          <div class="p-4 text-center">
                               <button class="bg-primary text-white py-2 px-6 rounded-full hover:bg-primary/90 transition">Buy now</button>
                           </div>
                       </div>
@@ -2349,8 +2349,8 @@
     let pos2 = 0;
   
     function animate() {
-      const width1 = line1.scrollWidth / 2;
-      const width2 = line2.scrollWidth / 2;
+      const width1 = line1.scrollWidth / 4;
+      const width2 = line2.scrollWidth / 4;
   
       pos1 -= 1;
       pos2 += 1;
@@ -2838,138 +2838,6 @@
   
   <!-- Our product -->
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const track = document.getElementById('carousel-track');
-        const prevBtn = document.getElementById('prev-btn');
-        const nextBtn = document.getElementById('next-btn');
-        const paginationDots = document.querySelectorAll('.pagination-dot');
-        
-        let currentIndex = 0; // Start at the first product
-        const itemsPerScreen = {
-            mobile: 1,
-            tablet: 2,
-            desktop: 3,
-            widescreen: 4
-        };
-        
-        // Get current items per screen based on window width
-        function getCurrentItemsPerScreen() {
-            if (window.innerWidth >= 1280) { // xl breakpoint
-                return itemsPerScreen.widescreen;
-            } else if (window.innerWidth >= 1024) { // lg breakpoint
-                return itemsPerScreen.desktop;
-            } else if (window.innerWidth >= 768) { // md breakpoint
-                return itemsPerScreen.tablet;
-            } else {
-                return itemsPerScreen.mobile;
-            }
-        }
-        
-        // Update carousel display based on screen size
-        function updateCarousel() {
-            const totalSlides = track.children.length;
-            const visibleItems = getCurrentItemsPerScreen();
-            const maxIndex = totalSlides - visibleItems;
-            
-            // Ensure current index is never too large to cause empty space
-            if (currentIndex > maxIndex) {
-                currentIndex = maxIndex;
-            }
-            
-            // Calculate item width based on current screen size
-            const itemWidth = 100 / visibleItems;
-            
-            // Update transform to show current slide
-            const translateX = -currentIndex * itemWidth;
-            track.style.transform = `translateX(${translateX}%)`;
-            
-            // Update active pagination dot
-            paginationDots.forEach((dot, index) => {
-                dot.classList.toggle('bg-primary', index === currentIndex);
-                dot.classList.toggle('bg-gray-300', index !== currentIndex);
-                dot.classList.toggle('active', index === currentIndex);
-            });
-            
-            // Update button states
-            prevBtn.disabled = currentIndex === 0;
-            prevBtn.classList.toggle('opacity-50', currentIndex === 0);
-            nextBtn.disabled = currentIndex >= maxIndex;
-            nextBtn.classList.toggle('opacity-50', currentIndex >= maxIndex);
-        }
-        
-        // Navigate to next slide
-        function nextSlide() {
-            const totalSlides = track.children.length;
-            const visibleItems = getCurrentItemsPerScreen();
-            const maxIndex = totalSlides - visibleItems;
-            
-            if (currentIndex < maxIndex) {
-                currentIndex++;
-                updateCarousel();
-            }
-        }
-        
-        // Navigate to previous slide
-        function prevSlide() {
-            if (currentIndex > 0) {
-                currentIndex--;
-                updateCarousel();
-            }
-        }
-        
-        // Go to specific slide
-        function goToSlide(index) {
-            const totalSlides = track.children.length;
-            const visibleItems = getCurrentItemsPerScreen();
-            const maxIndex = totalSlides - visibleItems;
-            
-            // Ensure we don't go past max index
-            if (index > maxIndex) {
-                index = maxIndex;
-            }
-            
-            currentIndex = index;
-            updateCarousel();
-        }
-        
-        // Event listeners
-        nextBtn.addEventListener('click', nextSlide);
-        prevBtn.addEventListener('click', prevSlide);
-        
-        paginationDots.forEach((dot) => {
-            dot.addEventListener('click', function() {
-                goToSlide(parseInt(this.getAttribute('data-index')));
-            });
-        });
-        
-        // Update pagination dots to reflect valid positions
-        function updatePaginationDots() {
-            const totalSlides = track.children.length;
-            const visibleItems = getCurrentItemsPerScreen();
-            const maxIndex = totalSlides - visibleItems;
-            
-            // Only show pagination dots for valid positions
-            paginationDots.forEach((dot, index) => {
-                if (index <= maxIndex) {
-                    dot.classList.remove('hidden');
-                } else {
-                    dot.classList.add('hidden');
-                }
-            });
-        }
-        
-        // Handle window resize
-        window.addEventListener('resize', function() {
-            updateCarousel();
-            updatePaginationDots();
-        });
-        
-        // Initial update
-        updateCarousel();
-        updatePaginationDots();
-    });
-</script>
 
 </body>
 </html>
