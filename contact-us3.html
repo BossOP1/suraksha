@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Security Services</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #b13535;
+            --primary-light: rgba(177, 53, 53, 0.1);
+            --primary-dark: #8a2828;
+            --secondary: #ffc107;
+            --secondary-light: rgba(255, 193, 7, 0.2);
+            --dark: #1a1a1a;
+            --light: #f8f9fa;
+            --grid-color: rgba(26, 26, 26, 0.05);
+            --grid-size: 30px;
+            --grid-accent: rgba(177, 53, 53, 0.1);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light);
+            background-image: 
+                linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px),
+                linear-gradient(to right, var(--grid-accent) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--grid-accent) 1px, transparent 1px);
+            background-size: 
+                var(--grid-size) var(--grid-size),
+                var(--grid-size) var(--grid-size),
+                calc(var(--grid-size) * 4) calc(var(--grid-size) * 4),
+                calc(var(--grid-size) * 4) calc(var(--grid-size) * 4);
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        .bg-primary { background-color: var(--primary); }
+        .bg-primary-light { background-color: var(--primary-light); }
+        .bg-primary-dark { background-color: var(--primary-dark); }
+        .bg-secondary { background-color: var(--secondary); }
+        .bg-secondary-light { background-color: var(--secondary-light); }
+        .bg-dark { background-color: var(--dark); }
+        .text-primary { color: var(--primary); }
+        .text-secondary { color: var(--secondary); }
+        .border-primary { border-color: var(--primary); }
+        
+        .security-pattern {
+            background-image: linear-gradient(to right, rgba(177, 53, 53, 0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(177, 53, 53, 0.03) 1px, transparent 1px);
+            background-size: 15px 15px;
+            background-position: center center;
+        }
+        
+        .shield-bg {
+            background-image: linear-gradient(45deg, rgba(255, 193, 7, 0.03) 25%, transparent 25%),
+                              linear-gradient(-45deg, rgba(255, 193, 7, 0.03) 25%, transparent 25%),
+                              linear-gradient(45deg, transparent 75%, rgba(255, 193, 7, 0.03) 75%),
+                              linear-gradient(-45deg, transparent 75%, rgba(255, 193, 7, 0.03) 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+        }
+        
+        /* Animated Service Location */
+        .service-location {
+            fill: var(--secondary);
+            stroke: var(--primary);
+            stroke-width: 2;
+            cursor: pointer;
+            filter: drop-shadow(0px 0px 4px rgba(177, 53, 53, 0.5));
+            transition: all 0.3s ease;
+        }
+        
+        .service-location:hover {
+            fill: var(--primary);
+            r: 12;
+        }
+        
+        .service-location-pulse {
+            fill: transparent;
+            stroke: var(--primary);
+            stroke-width: 1;
+            r: 10;
+            transform-origin: center;
+            opacity: 1;
+        }
+        
+        .india-map {
+            fill: var(--light);
+            stroke: var(--dark);
+            stroke-width: 1;
+            filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.1));
+        }
+        
+        .location-tooltip {
+            position: absolute;
+            background: rgba(26, 26, 26, 0.95);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 6px;
+            border-left: 4px solid var(--primary);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            display: none;
+            pointer-events: none;
+            z-index: 100;
+            max-width: 200px;
+            backdrop-filter: blur(5px);
+        }
+        
+        /* Form Styling */
+        .input-container {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+        
+        .floating-label {
+            position: absolute;
+            top: 0.8rem;
+            left: 1rem;
+            font-size: 1rem;
+            transition: all 0.25s ease-in-out;
+            pointer-events: none;
+            color: #6b7280;
+            padding: 0 0.25rem;
+        }
+        
+        .input-field {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.5rem;
+            outline: none;
+            transition: all 0.3s ease;
+            background-color: white;
+        }
+        
+        .input-field:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(177, 53, 53, 0.2);
+        }
+        
+        .input-field:focus ~ .floating-label,
+        .input-field:not(:placeholder-shown) ~ .floating-label {
+            transform: translateY(-1.4rem) scale(0.85);
+            background-color: white;
+            color: var(--primary);
+            font-weight: 500;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            transform-style: preserve-3d;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            border: 1px solid rgba(200, 200, 200, 0.3);
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        
+        .card:hover {
+            box-shadow: 0 20px 40px rgba(177, 53, 53, 0.2);
+            transform: translateY(-5px);
+        }
+        
+        .card-header {
+            position: relative;
+            overflow: hidden;
+            height: 8px;
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 4px;
+        }
+        
+        .card-header-segment {
+            height: 100%;
+            opacity: 0.8;
+        }
+        
+        .segment-primary {
+            background-color: var(--primary);
+        }
+        
+        .segment-secondary {
+            background-color: var(--secondary);
+        }
+        
+        .security-icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--secondary-light), var(--secondary));
+            box-shadow: 0 6px 16px rgba(255, 193, 7, 0.3);
+            color: var(--dark);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .security-icon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+            background-size: 6px 6px;
+        }
+        
+        .security-icon:hover {
+            transform: rotate(5deg) scale(1.05);
+            box-shadow: 0 8px 20px rgba(255, 193, 7, 0.4);
+        }
+        
+        .pulse-button {
+            position: relative;
+            box-shadow: 0 0 0 0 rgba(177, 53, 53, 0.7);
+            animation: pulse-shadow 2s infinite;
+        }
+        
+        @keyframes pulse-shadow {
+            0% {
+                box-shadow: 0 0 0 0 rgba(177, 53, 53, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(177, 53, 53, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(177, 53, 53, 0);
+            }
+        }
+        
+        .contact-info-item {
+            transition: all 0.3s ease;
+            transform: translateY(0);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .contact-info-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+            background-size: 10px 10px;
+            border-radius: 0.5rem;
+            opacity: 0.3;
+            z-index: -1;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-info-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .contact-info-item:hover::before {
+            opacity: 0.6;
+        }
+        
+        /* 3D Checkbox */
+        .checkbox-3d {
+            perspective: 1000px;
+        }
+        
+        .checkbox-3d input[type="checkbox"] {
+            display: none;
+        }
+        
+        .checkbox-3d label {
+            position: relative;
+            display: inline-block;
+            padding-left: 40px;
+            cursor: pointer;
+        }
+        
+        .checkbox-3d label:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 26px;
+            height: 26px;
+            border: 2px solid #e5e7eb;
+            border-radius: 4px;
+            background: white;
+            transition: all 0.2s ease;
+            transform-style: preserve-3d;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .checkbox-3d input[type="checkbox"]:checked + label:before {
+            background: var(--primary);
+            border-color: var(--primary);
+            transform: rotateY(180deg);
+        }
+        
+        .checkbox-3d label:after {
+            content: '✓';
+            position: absolute;
+            left: 7px;
+            top: 2px;
+            color: white;
+            font-size: 16px;
+            opacity: 0;
+            transition: all 0.2s ease;
+            transform: rotateY(-180deg);
+        }
+        
+        .checkbox-3d input[type="checkbox"]:checked + label:after {
+            opacity: 1;
+            transform: rotateY(0);
+        }
+    </style>
+</head>
+<body class="font-sans">
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 px-4 md:px-0 relative">
+        <!-- Background Elements with Grid Lines -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
+            <!-- Grid Accent Lines -->
+            <div class="absolute top-1/4 right-0 w-1/2 h-px bg-primary opacity-10"></div>
+            <div class="absolute bottom-1/3 left-0 w-1/2 h-px bg-primary opacity-10"></div>
+            <div class="absolute top-1/2 left-1/4 w-px h-1/3 bg-primary opacity-10"></div>
+            <div class="absolute bottom-0 right-1/3 w-px h-1/2 bg-primary opacity-10"></div>
+            
+            <!-- Security Grid Background -->
+            <div class="absolute top-0 left-0 w-full h-full shield-bg opacity-60"></div>
+        </div>
+        
+        <div class="container mx-auto relative z-10">
+            <!-- Heading with Creative Animation -->
+            <div class="flex flex-col items-center mb-16 reveal-element">
+                <div class="relative inline-block mb-4">
+                    <h2 class="text-5xl font-bold text-dark relative z-10">Contact <span class="text-primary">Us</span></h2>
+                    <div class="absolute -bottom-3 left-0 w-full h-1 bg-secondary z-0"></div>
+                    <div class="absolute -bottom-6 left-0 w-1/2 h-1 bg-primary z-0"></div>
+                    <div class="absolute -right-6 top-1/2 w-1 h-8 bg-primary z-0"></div>
+                    <div class="absolute -left-6 top-0 w-1 h-8 bg-secondary z-0"></div>
+                </div>
+                
+                <div class="max-w-3xl text-center">
+                    <p class="text-gray-700 text-lg">We provide exceptional security services throughout India. With offices in major cities, our team of security professionals is ready to protect what matters most to you.</p>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                <!-- Contact Form Card -->
+                <div class="lg:col-span-7 card">
+                    <div class="card-header">
+                        <div class="card-header-segment segment-primary"></div>
+                        <div class="card-header-segment segment-secondary"></div>
+                        <div class="card-header-segment segment-primary"></div>
+                        <div class="card-header-segment segment-secondary"></div>
+                        <div class="card-header-segment segment-primary"></div>
+                        <div class="card-header-segment segment-secondary"></div>
+                        <div class="card-header-segment segment-primary"></div>
+                        <div class="card-header-segment segment-secondary"></div>
+                        <div class="card-header-segment segment-primary"></div>
+                        <div class="card-header-segment segment-secondary"></div>
+                    </div>
+                    
+                    <div class="p-8 security-pattern">
+                        <div class="flex items-center mb-8">
+                            <div class="security-icon mr-5">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                                </svg>
+                            </div>
+                            <h3 class="text-3xl font-bold text-primary">Get in Touch</h3>
+                        </div>
+                        
+                        <form id="contactForm" class="contact-form">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                                <div class="input-container">
+                                    <input type="text" id="name" name="name" class="input-field" placeholder=" " required>
+                                    <label for="name" class="floating-label">Full Name</label>
+                                </div>
+                                
+                                <div class="input-container">
+                                    <input type="email" id="email" name="email" class="input-field" placeholder=" " required>
+                                    <label for="email" class="floating-label">Email Address</label>
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                                <div class="input-container">
+                                    <input type="tel" id="phone" name="phone" class="input-field" placeholder=" " required>
+                                    <label for="phone" class="floating-label">Phone Number</label>
+                                </div>
+                                
+                                <div class="input-container">
+                                    <select id="service" name="service" class="input-field" required>
+                                        <option value="" disabled selected></option>
+                                        <option value="physical-security">Physical Security</option>
+                                        <option value="surveillance">Surveillance Systems</option>
+                                        <option value="cybersecurity">Cybersecurity</option>
+                                        <option value="personal-protection">Personal Protection</option>
+                                        <option value="event-security">Event Security</option>
+                                        <option value="other">Other Services</option>
+                                    </select>
+                                    <label for="service" class="floating-label">Service Required</label>
+                                </div>
+                            </div>
+                            
+                            <div class="input-container mb-8">
+                                <textarea id="message" name="message" rows="4" class="input-field" placeholder=" " required></textarea>
+                                <label for="message" class="floating-label">Your Message</label>
+                            </div>
+                            
+                            <div class="mb-8 checkbox-3d">
+                                <input type="checkbox" id="consent" name="consent" required>
+                                <label for="consent">I consent to having this website store my information for contact purposes</label>
+                            </div>
+                            
+                            <button type="submit" class="w-full md:w-auto px-8 py-4 bg-primary text-white font-bold rounded-lg transition duration-300 hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transform hover:scale-105 pulse-button flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
+                                </svg>
+                                Submit Secure Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                
+                <!-- Contact Info & Map Card -->
+                <div class="lg:col-span-5 flex flex-col">
+                    <!-- Contact Info Card -->
+                    <div class="card mb-8 relative overflow-hidden">
+                        <div class="card-header">
+                        <div class="card-header-segment segment-primary"></div>
+                        <div class="card-header-segment segment-secondary"></div>
+                        <div class="card-header-segment segment-primary"></div>
+                        <div class="card-header-segment segment-secondary"></div>
+                        <div class="card-header-segment segment-primary"></div>
+                        <div class="card-header-segment segment-secondary"></div>
+                        <div class="card-header-segment segment-primary"></div>
+                        <div class="card-header-segment segment-secondary"></div>
+                        <div class="card-header-segment segment-primary"></div>
+                        <div class="card-header-segment segment-secondary"></div>
+                    </div>
+                        
+                        <div class="p-8 security-pattern">
+                            <div class="flex items-center mb-6">
+                                <div class="security-icon mr-5">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                </div>
+                                <h3 class="text-2xl font-bold text-primary">Contact Details</h3>
+                            </div>
+                            
+                            <div class="space-y-6">
+                                <div class="contact-info-item bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-all">
+                                    <div class="flex items-start">
+                                        <div class="bg-secondary rounded-lg p-3 mr-4 transform rotate-3">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-bold text-gray-900 mb-1">Headquarters</h4>
+                                            <p class="text-gray-700">123 Security Complex, Cyber City<br>New Delhi, 110001</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="contact-info-item bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-all">
+                                    <div class="flex items-start">
+                                        <div class="bg-secondary rounded-lg p-3 mr-4 transform -rotate-3">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-bold text-gray-900 mb-1">Emergency Hotline</h4>
+                                            <p class="text-gray-700 text-xl font-semibold">+91 11 2345 6789</p>
+                                            <p class="text-gray-600 text-sm">Available 24/7</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="contact-info-item bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-all">
+                                    <div class="flex items-start">
+                                        <div class="bg-secondary rounded-lg p-3 mr-4 transform rotate-3">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-bold text-gray-900 mb-1">Email Us</h4>
+                                            <p class="text-gray-700">
+                                                <a href="mailto:info@secureguard.com" class="hover:text-primary transition-colors">info@secureguard.com</a>
+                                            </p>
+                                            <p class="text-gray-700">
+                                                <a href="mailto:support@secureguard.com" class="hover:text-primary transition-colors">support@secureguard.com</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Map Card -->
+                    <div class="card flex-grow">
+                        <div class="card-header">
+                        <div class="card-header-segment segment-primary"></div>
+                        <div class="card-header-segment segment-secondary"></div>
+                        <div class="card-header-segment segment-primary"></div>
+                        <div class="card-header-segment segment-secondary"></div>
+                        <div class="card-header-segment segment-primary"></div>
+                        <div class="card-header-segment segment-secondary"></div>
+                        <div class="card-header-segment segment-primary"></div>
+                        <div class="card-header-segment segment-secondary"></div>
+                        <div class="card-header-segment segment-primary"></div>
+                        <div class="card-header-segment segment-secondary"></div>
+                    </div>
+                        
+                        <div class="p-8 security-pattern">
+                            <div class="flex items-center mb-6">
+                                <div class="security-icon mr-5">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                                    </svg>
+                                </div>
+                                <h3 class="text-2xl font-bold text-primary">Service Locations</h3>
+                            </div>
+                            
+                            <div class="relative bg-white rounded-lg shadow-sm p-4">
+                                <div id="tooltip" class="location-tooltip"></div>
+                                <div class="map-container relative">
+                                    <svg viewBox="0 0 500 600" width="100%" height="300">
+                                        <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+                                            <feGaussianBlur stdDeviation="5" result="blur" />
+                                            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                                        </filter>
+                                        
+                                        <path class="india-map" d="M199.7,38.3c-0.8,3-2.2,5.7-4.3,8.2c-2.1,2.5-3.5,5.3-4.3,8.4c-0.8,3.1-1.8,6.1-3.2,8.9
+                                        c-1.3,2.8-2.1,5.8-2.3,8.8c-0.2,3-0.8,6-1.8,8.8c-1,2.8-1.4,5.8-1.2,8.8c0.2,3,0,6-0.8,8.9c-0.7,2.9-0.9,5.9-0.6,8.9
+                                        c0.3,3,0.1,6-0.5,8.9c-0.6,2.9-0.8,5.9-0.5,8.9c0.3,3,0.1,6-0.5,8.9c-0.6,2.9-0.8,5.9-0.5,8.9c0.3,3,0.1,6-0.5,8.9
+                                        c-0.6,2.9-0.8,5.9-0.5,8.9c0.3,3,0.1,6-0.5,8.9c-0.6,2.9-0.8,5.9-0.5,8.9c0.3,3,0.1,6-0.5,8.9c-0.6,2.9-0.8,5.9-0.5,8.9
+                                        c0.3,3,0.1,6-0.5,8.9c-0.6,2.9-0.8,5.9-0.5,8.9c0.3,3,0.1,6-0.5,8.9c-0.6,2.9-0.8,5.9-0.5,8.9c0.3,3,0.1,6-0.5,8.9
+                                        c-0.6,2.9-0.8,5.9-0.5,8.9c0.3,3,0.1,6-0.5,8.9c-0.6,2.9-0.8,5.9-0.5,8.9c0.3,3,0.1,6-0.5,8.9c-0.6,2.9-0.8,5.9-0.5,8.9
+                                        c0.3,3,0.1,6-0.5,8.9c-0.6,2.9-0.8,5.9-0.5,8.9c0.3,3,0.1,6-0.5,8.9c-0.6,2.9-0.8,5.9-0.5,8.9c0.3,3,0.1,6-0.5,8.9
+                                        c-0.6,2.9-0.8,5.9-0.5,8.9c0.3,3,0.1,6-0.5,8.9c-0.6,2.9-0.8,5.9-0.5,8.9c0.3,3,0.1,6-0.5,8.9c-0.6,2.9-0.8,5.9-0.5,8.9
+                                        c0.3,3,0.1,6-0.5,8.9c-0.6,2.9-0.8,5.9-0.5,8.9c0.3,3,0.1,6-0.5,8.9c-0.6,2.9-0.8,5.9-0.5,8.9c0.3,3,0.1,6-0.5,8.9
+                                        c-0.3,1.5-0.5,2.9-0.6,4.4c2.7-0.2,5.4,0.1,8,0.8c2.6,0.7,5.4,0.9,8.1,0.6c2.7-0.3,5.5-0.1,8.1,0.6c2.6,0.7,5.4,0.9,8.1,0.6
+                                        c2.7-0.3,5.5-0.1,8.1,0.6c2.6,0.7,5.4,0.9,8.1,0.6c2.7-0.3,5.5-0.1,8.1,0.6c2.6,0.7,5.4,0.9,8.1,0.6c2.7-0.3,5.5-0.1,8.1,0.6
+                                        c2.6,0.7,5.4,0.9,8.1,0.6c2.7-0.3,5.5-0.1,8.1,0.6c2.6,0.7,5.4,0.9,8.1,0.6c2.7-0.3,5.5-0.1,8.1,0.6c2.6,0.7,5.4,0.9,8.1,0.6
+                                        c2.7-0.3,5.5-0.1,8.1,0.6c2.6,0.7,5.4,0.9,8.1,0.6c2.7-0.3,5.5-0.1,8.1,0.6c2.6,0.7,5.4,0.9,8.1,0.6c2.7-0.3,5.5-0.1,8.1,0.6
+                                        c2.6,0.7,5.4,0.9,8.1,0.6c2.7-0.3,5.5-0.1,8.1,0.6c2.6,0.7,5.4,0.9,8.1,0.6c2.7-0.3,5.5-0.1,8.1,0.6c2.6,0.7,5.4,0.9,8.1,0.6
+                                        c2.7-0.3,5.5-0.1,8.1,0.6c2.6,0.7,5.4,0.9,8.1,0.6c2.7-0.3,5.5-0.1,8.1,0.6c2.6,0.7,5.4,0.9,8.1,0.6c2.7-0.3,5.5-0.1,8.1,0.6
+                                        c2.6,0.7,5.4,0.9,8.1,0.6c2.7-0.3,5.5-0.1,8.1,0.6c2.6,0.7,5.4,0.9,8.1,0.6c2.7-0.3,5.5-0.1,8.1,0.6c2.6,0.7,5.4,0.9,8.1,0.6
+                                        c2.7-0.3,5.5-0.1,8.1,0.6c2.6,0.7,5.4,0.9,8.1,0.6c2.7-0.3,5.5-0.1,8.1,0.6c1.3,0.3,2.7,0.6,4,0.7c-0.2-2.9,0.1-5.7,0.8-8.5
+                                        c0.7-2.8,0.9-5.6,0.6-8.5c-0.3-2.9-0.1-5.8,0.6-8.5c0.7-2.8,0.9-5.6,0.6-8.5c-0.3-2.9-0.1-5.8,0.6-8.5c0.7-2.8,0.9-5.6,0.6-8.5
+                                        c-0.3-2.9-0.1-5.8,0.6-8.5c0.7-2.8,0.9-5.6,0.6-8.5c-0.3-2.9-0.1-5.8,0.6-8.5c0.7-2.8,0.9-5.6,0.6-8.5c-0.3-2.9-0.1-5.8,0.6-8.5
+                                        c0.7-2.8,0.9-5.6,0.6-8.5c-0.3-2.9-0.1-5.8,0.6-8.5c0.7-2.8,0.9-5.6,0.6-8.5c-0.3-2.9-0.1-5.8,0.6-8.5c0.7-2.8,0.9-5.6,0.6-8.5
+                                        c-0.3-2.9-0.1-5.8,0.6-8.5c0.7-2.8,0.9-5.6,0.6-8.5c-0.3-2.9-0.1-5.8,0.6-8.5c0.7-2.8,0.9-5.6,0.6-8.5c-0.3-2.9-0.1-5.8,0.6-8.5
+                                        c0.7-2.8,0.9-5.6,0.6-8.5c-0.3-2.9-0.1-5.8,0.6-8.5c0.7-2.8,0.9-5.6,0.6-8.5c-0.3-2.9-0.1-5.8,0.6-8.5c0.7-2.8,0.9-5.6,0.6-8.5
+                                        c-0.3-2.9-0.1-5.8,0.6-8.5c0.7-2.8,0.9-5.6,0.6-8.5c-0.3-2.9-0.1-5.8,0.6-8.5c0.7-2.8,0.9-5.6,0.6-8.5c-0.3-2.9-0.1-5.8,0.6-8.5
+                                        c0.7-2.8,0.9-5.6,0.6-8.5c-0.3-2.9-0.1-5.8,0.6-8.5c0.7-2.8,0.9-5.6,0.6-8.5c-0.3-2.9-0.1-5.8,0.6-8.5c0.7-2.8,0.9-5.6,0.6-8.5
+                                        c-0.3-2.9-0.1-5.8,0.6-8.5c0.7-2.8,0.9-5.6,0.6-8.5c-0.3-2.9-0.1-5.8,0.6-8.5c0.7-2.8,0.9-5.6,0.6-8.5c-0.3-2.9-0.1-5.8,0.6-8.5
+                                        c0.7-2.8,0.9-5.6,0.6-8.5c-0.3-2.9-0.1-5.8,0.6-8.5c0.7-2.8,0.9-5.6,0.6-8.5c-0.3-2.9-0.1-5.8,0.6-8.5c0.7-2.8,0.9-5.6,0.6-8.5
+                                        c-0.3-2.9-0.1-5.8,0.6-8.5c0.7-2.8,0.9-5.6,0.6-8.5c-0.3-2.9-0.1-5.8,0.6-8.5c0.3-1.3,0.6-2.7,0.7-4.1
+                                        c-2.9,0.3-5.8,0.1-8.6-0.6c-2.8-0.7-5.7-0.9-8.6-0.6c-2.9,0.3-5.8,0.1-8.6-0.6c-2.8-0.7-5.7-0.9-8.6-0.6c-2.9,0.3-5.8,0.1-8.6-0.6
+                                        c-2.8-0.7-5.7-0.9-8.6-0.6c-2.9,0.3-5.8,0.1-8.6-0.6c-2.8-0.7-5.7-0.9-8.6-0.6c-2.9,0.3-5.8,0.1-8.6-0.6c-2.8-0.7-5.7-0.9-8.6-0.6
+                                        c-2.9,0.3-5.8,0.1-8.6-0.6c-2.8-0.7-5.7-0.9-8.6-0.6c-2.9,0.3-5.8,0.1-8.6-0.6c-2.8-0.7-5.7-0.9-8.6-0.6c-2.9,0.3-5.8,0.1-8.6-0.6
+                                        c-2.8-0.7-5.7-0.9-8.6-0.6c-2.9,0.3-5.8,0.1-8.6-0.6c-2.8-0.7-5.7-0.9-8.6-0.6c-2.9,0.3-5.8,0.1-8.6-0.6c-2.8-0.7-5.7-0.9-8.6-0.6
+                                        c-2.9,0.3-5.8,0.1-8.6-0.6c-2.8-0.7-5.7-0.9-8.6-0.6c-2.9,0.3-5.8,0.1-8.6-0.6c-2.8-0.7-5.7-0.9-8.6-0.6c-2.9,0.3-5.8,0.1-8.6-0.6
+                                        c-2.8-0.7-5.7-0.9-8.6-0.6c-2.9,0.3-5.8,0.1-8.6-0.6c-2.8-0.7-5.7-0.9-8.6-0.6c-2.9,0.3-5.8,0.1-8.6-0.6c-2.8-0.7-5.7-0.9-8.6-0.6
+                                        c-2.9,0.3-5.8,0.1-8.6-0.6c-2.8-0.7-5.7-0.9-8.6-0.6c-2.9,0.3-5.8,0.1-8.6-0.6c-2.8-0.7-5.7-0.9-8.6-0.6c-2.9,0.3-5.8,0.1-8.6-0.6
+                                        c-2.8-0.7-5.7-0.9-8.6-0.6c-2.9,0.3-5.8,0.1-8.6-0.6c-2.8-0.7-5.7-0.9-8.6-0.6c-2.9,0.3-5.8,0.1-8.6-0.6c-2.8-0.7-5.7-0.9-8.6-0.6
+                                        C202.8,39.2,201.3,38.9,199.7,38.3z"/>
+                                        
+                                        <!-- Service Locations with Pulse Effect -->
+                                        <g class="location-group" filter="url(#glow)">
+                                            <circle class="service-location" cx="160" cy="180" r="10" data-name="New Delhi" data-services="All Services"/>
+                                            <circle class="service-location-pulse" cx="160" cy="180" r="10" data-name="New Delhi" />
+                                        </g>
+                                        
+                                        <g class="location-group" filter="url(#glow)">
+                                            <circle class="service-location" cx="120" cy="300" r="10" data-name="Mumbai" data-services="Physical Security, Surveillance Systems"/>
+                                            <circle class="service-location-pulse" cx="120" cy="300" r="10" data-name="Mumbai" />
+                                        </g>
+                                        
+                                        <g class="location-group" filter="url(#glow)">
+                                            <circle class="service-location" cx="200" cy="350" r="10" data-name="Bangalore" data-services="Cybersecurity, Personal Protection"/>
+                                            <circle class="service-location-pulse" cx="200" cy="350" r="10" data-name="Bangalore" />
+                                        </g>
+                                        
+                                        <g class="location-group" filter="url(#glow)">
+                                            <circle class="service-location" cx="240" cy="250" r="10" data-name="Hyderabad" data-services="Event Security, Surveillance Systems"/>
+                                            <circle class="service-location-pulse" cx="240" cy="250" r="10" data-name="Hyderabad" />
+                                        </g>
+                                        
+                                        <g class="location-group" filter="url(#glow)">
+                                            <circle class="service-location" cx="270" cy="200" r="10" data-name="Kolkata" data-services="Physical Security, Cybersecurity"/>
+                                            <circle class="service-location-pulse" cx="270" cy="200" r="10" data-name="Kolkata" />
+                                        </g>
+                                        
+                                        <g class="location-group" filter="url(#glow)">
+                                            <circle class="service-location" cx="150" cy="250" r="10" data-name="Chennai" data-services="All Services"/>
+                                            <circle class="service-location-pulse" cx="150" cy="250" r="10" data-name="Chennai" />
+                                        </g>
+                                        
+                                        <g class="location-group" filter="url(#glow)">
+                                            <circle class="service-location" cx="120" cy="150" r="10" data-name="Jaipur" data-services="Event Security, Personal Protection"/>
+                                            <circle class="service-location-pulse" cx="120" cy="150" r="10" data-name="Jaipur" />
+                                        </g>
+                                        
+                                        <g class="location-group" filter="url(#glow)">
+                                            <circle class="service-location" cx="300" cy="300" r="10" data-name="Ahmedabad" data-services="Physical Security, Surveillance Systems"/>
+                                            <circle class="service-location-pulse" cx="300" cy="300" r="10" data-name="Ahmedabad" />
+                                        </g>
+                                    </svg>
+                                </div>
+                                <div class="text-center mt-2 text-sm text-gray-600 italic">Hover over the locations to see our services</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <script>
+        // Animate elements on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate the reveal elements
+            const revealElements = document.querySelectorAll('.reveal-element');
+            revealElements.forEach((el, index) => {
+                setTimeout(() => {
+                    el.classList.add('opacity-100', 'translate-y-0');
+                }, 300 * index);
+            });
+            
+            // Animate the pulse circles
+            const pulseCircles = document.querySelectorAll('.service-location-pulse');
+            pulseCircles.forEach((circle, index) => {
+                // Create random delay for more natural effect
+                const delay = Math.random() * 2;
+                
+                // Animate each circle with GSAP
+                gsap.to(circle, {
+                    r: 20,
+                    opacity: 0,
+                    duration: 2,
+                    delay: delay,
+                    repeat: -1,
+                    ease: "power1.out"
+                });
+            });
+        });
+        
+        // Form Validation and Submission with improved feedback
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form fields
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const service = document.getElementById('service').value;
+            const message = document.getElementById('message').value;
+            const consent = document.getElementById('consent').checked;
+            
+            // Validate form
+            let isValid = true;
+            const fields = [
+                { id: 'name', value: name },
+                { id: 'email', value: email },
+                { id: 'phone', value: phone },
+                { id: 'service', value: service },
+                { id: 'message', value: message }
+            ];
+            
+            // Check each field
+            fields.forEach(field => {
+                const element = document.getElementById(field.id);
+                if (!field.value) {
+                    isValid = false;
+                    element.classList.add('border-red-500');
+                    
+                    // Add shake animation
+                    element.classList.add('animate-shake');
+                    setTimeout(() => {
+                        element.classList.remove('animate-shake');
+                    }, 500);
+                } else {
+                    element.classList.remove('border-red-500');
+                }
+            });
+            
+            // Check consent
+            if (!consent) {
+                isValid = false;
+                document.querySelector('label[for="consent"]').classList.add('text-red-500');
+            } else {
+                document.querySelector('label[for="consent"]').classList.remove('text-red-500');
+            }
+            
+            if (!isValid) {
+                return;
+            }
+            
+            // Disable the submit button and show loading state
+            const submitButton = this.querySelector('button[type="submit"]');
+            const originalContent = submitButton.innerHTML;
+            submitButton.disabled = true;
+            submitButton.classList.add('opacity-75');
+            submitButton.innerHTML = `
+                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Processing...
+            `;
+            
+            // Mock form submission (would use Formster API in production)
+            const formData = {
+                name,
+                email,
+                phone,
+                service,
+                message,
+                consent
+            };
+            
+            // Simulate API call with delay
+            setTimeout(() => {
+                // Show success message
+                this.innerHTML = `
+                    <div class="text-center py-12">
+                        <div class="bg-green-100 text-green-800 rounded-full p-4 w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Message Sent Successfully!</h3>
+                        <p class="text-gray-600 mb-6">Thank you for contacting us. Our security team will respond within 24 hours.</p>
+                        <button type="button" id="resetForm" class="px-6 py-3 bg-primary text-white font-bold rounded-lg transition duration-300 hover:bg-primary-dark">
+                            Send Another Message
+                        </button>
+                    </div>
+                `;
+                
+                // Add event listener to reset button
+                document.getElementById('resetForm').addEventListener('click', function() {
+                    document.getElementById('contactForm').innerHTML = `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div class="input-container">
+                                <input type="text" id="name" name="name" class="input-field" placeholder=" " required>
+                                <label for="name" class="floating-label">Full Name</label>
+                            </div>
+                            
+                            <div class="input-container">
+                                <input type="email" id="email" name="email" class="input-field" placeholder=" " required>
+                                <label for="email" class="floating-label">Email Address</label>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div class="input-container">
+                                <input type="tel" id="phone" name="phone" class="input-field" placeholder=" " required>
+                                <label for="phone" class="floating-label">Phone Number</label>
+                            </div>
+                            
+                            <div class="input-container">
+                                <select id="service" name="service" class="input-field" required>
+                                    <option value="" disabled selected></option>
+                                    <option value="physical-security">Physical Security</option>
+                                    <option value="surveillance">Surveillance Systems</option>
+                                    <option value="cybersecurity">Cybersecurity</option>
+                                    <option value="personal-protection">Personal Protection</option>
+                                    <option value="event-security">Event Security</option>
+                                    <option value="other">Other Services</option>
+                                </select>
+                                <label for="service" class="floating-label">Service Required</label>
+                            </div>
+                        </div>
+                        
+                        <div class="input-container mb-8">
+                            <textarea id="message" name="message" rows="4" class="input-field" placeholder=" " required></textarea>
+                            <label for="message" class="floating-label">Your Message</label>
+                        </div>
+                        
+                        <div class="mb-8 checkbox-3d">
+                            <input type="checkbox" id="consent" name="consent" required>
+                            <label for="consent">I consent to having this website store my information for contact purposes</label>
+                        </div>
+                        
+                        <button type="submit" class="w-full md:w-auto px-8 py-4 bg-primary text-white font-bold rounded-lg transition duration-300 hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transform hover:scale-105 pulse-button flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
+                            </svg>
+                            Submit Secure Message
+                        </button>
+                    `;
+                });
+            }, 2000);
+        });
+        
+        // Enhanced Map Location Tooltips
+        // const locations = document.querySelectorAll('.service-location');
+        // const tooltip = document.getElementById('tooltip');
+        
+        // locations.forEach(location => {
+        //     location.addEventListener('mouseover', function(e) {
+        //         const name = this.getAttribute('data-name');
+        //         const services = this.getAttribute('data-services');
+                
+        //         // Enhanced tooltip with icon and better formatting
+        //         tooltip.innerHTML = `
+        //             <div class="flex items-center mb-1">
+        //                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-
