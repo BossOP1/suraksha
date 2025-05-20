@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Firm Banner - Light Theme</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .security-banner {
+            background-color: #f8f8f8;
+            border-left: 4px solid #b13535;
+        }
+        .cta-button {
+            background-color: #b13535;
+            transition: all 0.3s ease;
+        }
+        .cta-button:hover {
+            background-color: #c84545;
+            transform: translateY(-1px);
+        }
+        .shield-icon {
+            color: #ffd700;
+            filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.2));
+        }
+        .security-text {
+            color: #333333;
+        }
+    </style>
+</head>
+<div class="security-banner w-full py-6 px-6 shadow-md rounded-r-lg">
+    <div class="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
+        <div class="flex items-center">
+            <svg class="shield-icon w-8 h-8 mr-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            <div>
+                <h2 class="text-xl font-bold security-text">Protect Your Business with Professional Security</h2>
+                <p class="text-gray-600 text-sm">Trusted solutions for your safety and peace of mind</p>
+            </div>
+        </div>
+        <div class="flex items-center space-x-4">
+            <div class="hidden md:block">
+                <div class="flex items-center text-gray-700 text-sm">
+                    <svg class="w-4 h-4 text-yellow-500 mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                    </svg>
+                    24/7 Protection
+                </div>
+            </div>
+            <button id="ctaBtn" class="cta-button text-white font-medium py-2 px-6 rounded shadow-md">
+                Get Secured Now
+            </button>
+        </div>
+    </div>
+</div>
+<script>
+    // Simple interaction
+    document.getElementById('ctaBtn').addEventListener('click', function() {
+        this.innerHTML = 'Thank You!';
+        setTimeout(() => {
+            this.innerHTML = 'Get Secured Now';
+        }, 2000);
+    });
+</script>
+</html>

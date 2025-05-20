@@ -1,0 +1,297 @@
+<style>
+    :root {
+        --primary: #b13535;
+        --yellow: #FFD700;
+        --black: #121212;
+        --grey: #f3f4f6;
+    }
+    
+    .brand-primary {
+        background-color: var(--primary);
+    }
+    
+    .brand-yellow {
+        background-color: var(--yellow);
+    }
+    
+    .text-brand-primary {
+        color: var(--primary);
+    }
+    
+    .text-brand-yellow {
+        color: var(--yellow);
+    }
+    
+    .border-brand-primary {
+        border-color: var(--primary);
+    }
+    
+    .feature-card {
+        transition: all 0.3s ease;
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    .security-icon {
+        transition: all 0.3s ease;
+    }
+    
+    .feature-card:hover .security-icon {
+        transform: scale(1.1);
+    }
+
+    .stats-counter {
+        font-variant-numeric: tabular-nums;
+    }
+</style>
+
+
+<!-- why choose us -->
+<section class="bg-white py-16" x-data="{ 
+    activeTab: 'experience',
+    stats: {
+        experience: 0,
+        clients: 0,
+        technicians: 0,
+        solutions: 0
+    },
+    initStats() {
+        const targets = {
+            experience: 25,
+            clients: 1500,
+            technicians: 85,
+            solutions: 35
+        };
+        
+        // Animate counter numbers
+        for (const [key, target] of Object.entries(targets)) {
+            let current = 0;
+            const duration = 2000; // 2 seconds
+            const increment = target / (duration / 16); // 60fps
+            
+            const counter = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(counter);
+                }
+                this.stats[key] = Math.floor(current);
+            }, 16);
+        }
+    }
+}" x-init="initStats()">
+
+
+    <!-- Hero Section with Gradient Overlay -->
+    <div class="relative overflow-hidden mb-16">
+        <div class="absolute inset-0 brand-primary opacity-90"></div>
+        <div class="container mx-auto px-4 py-16 relative z-10 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Why Choose <span class="text-brand-yellow">SecureVision</span></h2>
+            <p class="text-lg md:text-xl text-white max-w-3xl mx-auto">Your security is not just our business — it's our passion. We deliver cutting-edge surveillance solutions backed by decades of industry experience.</p>
+        </div>
+    </div>
+
+    <!-- Key Features Grid -->
+    <div class="container mx-auto px-4 mb-16">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Card 1 -->
+            <div class="feature-card bg-white rounded-lg p-6 shadow-lg border-t-4 border-brand-primary">
+                <div class="flex items-center justify-center h-16 w-16 rounded-full brand-yellow mb-4 mx-auto">
+                    <svg class="h-8 w-8 text-black security-icon" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-center mb-2">Advanced Technology</h3>
+                <p class="text-gray-600 text-center">State-of-the-art surveillance equipment with AI-powered analytics for proactive threat detection.</p>
+            </div>
+            
+            <!-- Card 2 -->
+            <div class="feature-card bg-white rounded-lg p-6 shadow-lg border-t-4 border-brand-primary">
+                <div class="flex items-center justify-center h-16 w-16 rounded-full brand-yellow mb-4 mx-auto">
+                    <svg class="h-8 w-8 text-black security-icon" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v1h8v-1zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-1a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 16v2h-3zM4.75 14.094A5.973 5.973 0 004 17v1H1v-2a3 3 0 014.75-2.906z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-center mb-2">Dedicated Experts</h3>
+                <p class="text-gray-600 text-center">Our certified security professionals bring years of experience from law enforcement and cybersecurity backgrounds.</p>
+            </div>
+            
+            <!-- Card 3 -->
+            <div class="feature-card bg-white rounded-lg p-6 shadow-lg border-t-4 border-brand-primary">
+                <div class="flex items-center justify-center h-16 w-16 rounded-full brand-yellow mb-4 mx-auto">
+                    <svg class="h-8 w-8 text-black security-icon" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-center mb-2">24/7 Monitoring</h3>
+                <p class="text-gray-600 text-center">Round-the-clock surveillance center with rapid response protocols to protect your assets at all times.</p>
+            </div>
+            
+            <!-- Card 4 -->
+            <div class="feature-card bg-white rounded-lg p-6 shadow-lg border-t-4 border-brand-primary">
+                <div class="flex items-center justify-center h-16 w-16 rounded-full brand-yellow mb-4 mx-auto">
+                    <svg class="h-8 w-8 text-black security-icon" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-center mb-2">Custom Solutions</h3>
+                <p class="text-gray-600 text-center">Tailored security systems designed to meet your specific requirements and budget constraints.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="brand-primary py-16 mb-16">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <p class="text-4xl md:text-5xl font-bold text-white mb-2">
+                        <span class="stats-counter" x-text="stats.experience"></span>+
+                    </p>
+                    <p class="text-lg text-brand-yellow">Years Experience</p>
+                </div>
+                <div class="text-center">
+                    <p class="text-4xl md:text-5xl font-bold text-white mb-2">
+                        <span class="stats-counter" x-text="stats.clients"></span>+
+                    </p>
+                    <p class="text-lg text-brand-yellow">Satisfied Clients</p>
+                </div>
+                <div class="text-center">
+                    <p class="text-4xl md:text-5xl font-bold text-white mb-2">
+                        <span class="stats-counter" x-text="stats.technicians"></span>+
+                    </p>
+                    <p class="text-lg text-brand-yellow">Certified Technicians</p>
+                </div>
+                <div class="text-center">
+                    <p class="text-4xl md:text-5xl font-bold text-white mb-2">
+                        <span class="stats-counter" x-text="stats.solutions"></span>+
+                    </p>
+                    <p class="text-lg text-brand-yellow">Security Solutions</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Process Tabs -->
+    <div class="container mx-auto px-4 mb-16">
+        <h3 class="text-3xl font-bold text-center mb-8">Our <span class="text-brand-primary">Process</span></h3>
+        
+        <!-- Tabs Navigation -->
+        <div class="flex flex-wrap justify-center mb-8">
+            <button @click="activeTab = 'consult'" :class="{'bg-brand-primary text-white': activeTab === 'consult', 'bg-grey text-gray-700': activeTab !== 'consult'}" class="px-6 py-3 rounded-lg mx-2 mb-2 transition duration-300 font-medium">
+                Consultation
+            </button>
+            <button @click="activeTab = 'design'" :class="{'bg-brand-primary text-white': activeTab === 'design', 'bg-grey text-gray-700': activeTab !== 'design'}" class="px-6 py-3 rounded-lg mx-2 mb-2 transition duration-300 font-medium">
+                System Design
+            </button>
+            <button @click="activeTab = 'install'" :class="{'bg-brand-primary text-white': activeTab === 'install', 'bg-grey text-gray-700': activeTab !== 'install'}" class="px-6 py-3 rounded-lg mx-2 mb-2 transition duration-300 font-medium">
+                Installation
+            </button>
+            <button @click="activeTab = 'monitor'" :class="{'bg-brand-primary text-white': activeTab === 'monitor', 'bg-grey text-gray-700': activeTab !== 'monitor'}" class="px-6 py-3 rounded-lg mx-2 mb-2 transition duration-300 font-medium">
+                Monitoring
+            </button>
+        </div>
+        
+        <!-- Tab Content -->
+        <div class="bg-grey rounded-lg p-8 shadow-md">
+            <div x-show="activeTab === 'consult'" class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/3 mb-6 md:mb-0">
+                    <div class="h-32 w-32 rounded-full brand-yellow flex items-center justify-center mx-auto">
+                        <svg class="h-16 w-16 text-black" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="md:w-2/3 md:pl-8">
+                    <h4 class="text-2xl font-semibold mb-4">Initial Consultation</h4>
+                    <p class="text-gray-600 mb-4">We begin with a thorough assessment of your security needs and challenges. Our expert consultants walk through your property, identify vulnerabilities, and understand your specific requirements.</p>
+                    <p class="text-gray-600">This crucial first step ensures that we design a system that addresses your unique security concerns while staying within your budget parameters.</p>
+                </div>
+            </div>
+            
+            <div x-show="activeTab === 'design'" class="flex flex-col md:flex-row items-center" style="display: none;">
+                <div class="md:w-1/3 mb-6 md:mb-0">
+                    <div class="h-32 w-32 rounded-full brand-yellow flex items-center justify-center mx-auto">
+                        <svg class="h-16 w-16 text-black" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="md:w-2/3 md:pl-8">
+                    <h4 class="text-2xl font-semibold mb-4">Custom System Design</h4>
+                    <p class="text-gray-600 mb-4">Our engineering team creates a tailored security solution incorporating the right mix of cameras, sensors, access control systems, and monitoring equipment for your specific needs.</p>
+                    <p class="text-gray-600">We provide detailed 3D renderings and system specifications so you can visualize the complete solution before installation begins.</p>
+                </div>
+            </div>
+            
+            <div x-show="activeTab === 'install'" class="flex flex-col md:flex-row items-center" style="display: none;">
+                <div class="md:w-1/3 mb-6 md:mb-0">
+                    <div class="h-32 w-32 rounded-full brand-yellow flex items-center justify-center mx-auto">
+                        <svg class="h-16 w-16 text-black" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                            <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="md:w-2/3 md:pl-8">
+                    <h4 class="text-2xl font-semibold mb-4">Professional Installation</h4>
+                    <p class="text-gray-600 mb-4">Our certified technicians handle every aspect of the installation process with minimal disruption to your operations. We follow strict quality standards and industry best practices.</p>
+                    <p class="text-gray-600">After installation, we conduct thorough testing and provide comprehensive training on how to use your new security system effectively.</p>
+                </div>
+            </div>
+            
+            <div x-show="activeTab === 'monitor'" class="flex flex-col md:flex-row items-center" style="display: none;">
+                <div class="md:w-1/3 mb-6 md:mb-0">
+                    <div class="h-32 w-32 rounded-full brand-yellow flex items-center justify-center mx-auto">
+                        <svg class="h-16 w-16 text-black" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
+                            <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="md:w-2/3 md:pl-8">
+                    <h4 class="text-2xl font-semibold mb-4">Ongoing Monitoring & Support</h4>
+                    <p class="text-gray-600 mb-4">Our 24/7 monitoring center keeps watch over your property around the clock. Our response team follows established protocols to address any security events quickly and effectively.</p>
+                    <p class="text-gray-600">We provide regular maintenance, software updates, and technical support to ensure your system continues to perform optimally for years to come.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="container mx-auto px-4">
+        <div class="bg-black rounded-lg p-8 md:p-12 shadow-lg text-center relative overflow-hidden">
+            <div class="relative z-10">
+                <h3 class="text-2xl md:text-3xl font-bold text-white mb-4">Ready to Upgrade Your Security?</h3>
+                <p class="text-lg text-gray-300 mb-6 max-w-2xl mx-auto">Schedule a free consultation with our security experts and discover how we can help protect what matters most to you.</p>
+                <button class="brand-primary hover:bg-red-700 text-white font-bold py-3 px-8 rounded-lg transition duration-300 transform hover:scale-105">
+                    Get Free Consultation
+                </button>
+            </div>
+            <div class="absolute top-0 right-0 w-64 h-64 brand-yellow opacity-20 rounded-full -mr-32 -mt-32"></div>
+            <div class="absolute bottom-0 left-0 w-40 h-40 brand-primary opacity-20 rounded-full -ml-20 -mb-20"></div>
+        </div>
+    </div>
+    </section>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize GSAP animations
+            gsap.from('.feature-card', {
+                y: 50,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.2,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: '.feature-card',
+                    start: 'top 80%'
+                }
+            });
+        });
+    </script>
